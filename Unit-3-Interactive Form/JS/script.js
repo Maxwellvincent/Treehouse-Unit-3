@@ -53,10 +53,10 @@ $('.activities').change(function(e){
     //$checkedBox.attr('checked','true')
 
     if($checkedBox.attr("checked","true")){
-        $totalActivityCost = $activityCost;
+        $totalActivityCost += $activityCost;
         // console.log($totalActivityCost);
-    }else {
-        $activityCost -= $activityCost;
+    }else if($checkedBox.attr("checked","false")){
+        $totalActivityCost -= $activityCost;
     }
 
     $totalActivityElement.val($totalActivityCost);
