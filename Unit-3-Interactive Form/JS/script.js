@@ -1,4 +1,4 @@
-const inputBoxes = $('.activities input');
+const $inputBoxes = $('.activities input');
 // console.log($inputBoxes);
 
 // Focus the form to the first text input
@@ -34,8 +34,8 @@ $('#design').change(function(e){
 // ACTIVITY FORM SECTION
 // create an element to display total activity cost
 
-var $totalActivityElement = $('<label>Total Cost: </label><input type="number" name="Total Cost:" readonly>');
-var $totalActivityCost = 0; 
+let $totalActivityElement = $('<label>Total Cost: </label><input type="number" name="Total Cost:" readonly>');
+let $totalActivityCost = 0; 
 
 
 $('.activities').append($totalActivityElement);
@@ -46,11 +46,11 @@ $('.activities').change(function(e){
     // console.log(event);
 
     // set the input element to a variable, this is the element that is clicked
-    var $checkedBox = $(event.target);
+    let $checkedBox = $(event.target);
     // console.log(($checkedBox));
 
     // Takes the attribute which is a string and turns it into a number, check with typeOf
-    var $activityCost = parseInt(($checkedBox.attr('data-cost').substring(1)));
+    let $activityCost = parseInt(($checkedBox.attr('data-cost').substring(1)));
     // console.log($activityCost);
 
     // Have to use checked.prop given that there isnt an inital attr element for the checkbox 
@@ -65,21 +65,22 @@ $('.activities').change(function(e){
     
     // console.log($totalActivityCost);
     var $activityDate = $checkedBox.attr('data-day-and-time');
-    console.log($activityDate);
+    // console.log($activityDate);
 
     // Now i need to compare the activity that was clicked (checkedbox) with all other activites, to disable conflicting times. 
 
-    $.each(inputBoxes, function(i){
-        var checkboxData = inputBoxes[i].getAttribute('data-day-and-time');
-        console.log(checkboxData)
-        if($activityDate === checkboxData && $checkedBox !== inputBoxes[i]) {
+    $.each($inputBoxes, function(i){
+        let $checkboxData = $inputBoxes.attr('data-day-and-time');
+        console.log($checkboxData);
+        if($activityDate === $checkboxData && $checkedBox[0] !== $inputBoxes) {
 
             if($checkedBox.prop('checked')){
+                
             // then disable all other matching data-and times prop('disabled',true)
-                inputBoxes[i].setAttribute('disabled',true);
+                $inputBoxes[i].setAttribute('disabled',true);
             } else if($checkedBox.prop('checked') === false){
             // then enable all other matching data prop('enabled',true)
-                inputBoxes[i].setAttribute('enabled',true);
+                $inputBoxes[i].setAttribute('enabled',true);
             }
 
         }
