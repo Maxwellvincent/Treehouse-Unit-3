@@ -1,3 +1,6 @@
+const inputBoxes = $('.activities input');
+// console.log($inputBoxes);
+
 // Focus the form to the first text input
 $('#name').focus();
 
@@ -16,7 +19,7 @@ $('#color option[value !=all]').attr("hidden","true");
 
 // Grab the design select element add an event listener 
 $('#design').change(function(e){
-    console.log($(event.target).val());
+    // console.log($(event.target).val());
     if($(event.target).val() === "js puns"){
             $('#color option[value=cornflowerblue]').attr("selected","selected").show();
             $('#color option[value=darkslategrey]').show();
@@ -31,7 +34,7 @@ $('#design').change(function(e){
 // ACTIVITY FORM SECTION
 // create an element to display total activity cost
 
-var $totalActivityElement = $('<input type="number" readonly>');
+var $totalActivityElement = $('<label>Total Cost: </label><input type="number" name="Total Cost:" readonly>');
 var $totalActivityCost = 0; 
 
 
@@ -40,25 +43,53 @@ $('.activities').append($totalActivityElement);
 $('.activities').change(function(e){
 
     // Gives me the input element that is clicked.
-    // console.log($(event.target)); WORKS
+    // console.log(event);
 
-    // set the input element to a variable
+    // set the input element to a variable, this is the element that is clicked
     var $checkedBox = $(event.target);
-    // console.log($checkedBox);
+    // console.log(($checkedBox));
 
     // Takes the attribute which is a string and turns it into a number, check with typeOf
     var $activityCost = parseInt(($checkedBox.attr('data-cost').substring(1)));
     // console.log($activityCost);
 
-    //$checkedBox.attr('checked','true')
+    // Have to use checked.prop given that there isnt an inital attr element for the checkbox 
+    // console.log(($checkedBox.prop('checked')));
 
-    if($checkedBox.attr("checked","true")){
+    // if statement to add and subtract activities that are clicked on and off 
+    if($checkedBox.prop('checked')){
         $totalActivityCost += $activityCost;
-        // console.log($totalActivityCost);
-    }else if($checkedBox.attr("checked","false")){
+    } else if ($checkedBox.prop('checked') === false){
         $totalActivityCost -= $activityCost;
     }
+    
+    // console.log($totalActivityCost);
+    var $activityDate = $checkedBox.attr('data-day-and-time');
+    console.log($activityDate);
 
-    $totalActivityElement.val($totalActivityCost);
+    // Now i need to compare the activity that was clicked (checkedbox) with all other activites, to disable conflicting times. 
+
+    $.each(inputBoxes, function(i){
+        var checkboxData = inputBoxes[i].getAttribute('data-day-and-time');
+        console.log(checkboxData)
+        if($activityDate === checkboxData && $checkedBox !== inputBoxes[i]) {
+
+            if($checkedBox.prop('checked')){
+            // then disable all other matching data-and times prop('disabled',true)
+                inputBoxes[i].setAttribute('disabled',true);
+            } else if($checkedBox.prop('checked') === false){
+            // then enable all other matching data prop('enabled',true)
+                inputBoxes[i].setAttribute('enabled',true);
+            }
+
+        }
+
+    })
+
+
+
+    return $totalActivityElement.val($totalActivityCost);
+
+
 });
 
