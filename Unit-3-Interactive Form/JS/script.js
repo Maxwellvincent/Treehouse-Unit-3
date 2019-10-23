@@ -70,11 +70,10 @@ $('.activities').change(function(e){
     // Now i need to compare the activity that was clicked (checkedbox) with all other activites, to disable conflicting times. 
 
     $.each($inputBoxes, function(i){
-        let checkboxData = $inputBoxes.attr('data-day-and-time');
-        console.log(checkboxData);
-        if($activityDate === checkboxData && $checkedBox[i] !== $inputBoxes) {
-            console.log($activityDate);
-            console.log($checkboxData);
+        let $checkboxData = $inputBoxes.attr('data-day-and-time');
+        console.log($checkboxData);
+        if($activityDate === $checkboxData && $checkedBox[i] !== $inputBoxes[0]) {
+            
             if($checkedBox.prop('checked')){
                 
             // then disable all other matching data-and times prop('disabled',true)
@@ -87,7 +86,6 @@ $('.activities').change(function(e){
         }
 
     })
-
 
 
     return $totalActivityElement.val($totalActivityCost);
