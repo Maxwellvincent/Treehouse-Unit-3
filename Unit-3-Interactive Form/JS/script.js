@@ -1,4 +1,4 @@
-const $inputBoxes = $('.activities input');
+const inputBoxes = $('.activities input');
 // console.log($inputBoxes);
 
 // Focus the form to the first text input
@@ -69,18 +69,18 @@ $('.activities').change(function(e){
 
     // Now i need to compare the activity that was clicked (checkedbox) with all other activites, to disable conflicting times. 
 
-    $.each($inputBoxes, function(i){
-        let $checkboxData = $inputBoxes.attr('data-day-and-time');
-        console.log($checkboxData);
-        if($activityDate === $checkboxData && $checkedBox[i] !== $inputBoxes[0]) {
+    $.each(inputBoxes, function(i){
+        let checkboxData = inputBoxes[i].getAttribute('data-day-and-time');
+        console.dir(checkboxData);
+        if($activityDate === checkboxData && $checkedBox[i] !== inputBoxes[0]) {
             
             if($checkedBox.prop('checked')){
                 
             // then disable all other matching data-and times prop('disabled',true)
-                $inputBoxes[i].setAttribute('disabled',true);
+                inputBoxes[i].setAttribute('disabled',true);
             } else if($checkedBox.prop('checked') === false){
             // then enable all other matching data prop('enabled',true)
-                $inputBoxes[i].setAttribute('enabled',true);
+                inputBoxes[i].setAttribute('enabled',true);
             }
 
         }
