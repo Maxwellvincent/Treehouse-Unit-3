@@ -1,5 +1,5 @@
 const inputBoxes = $('.activities input');
-// console.log($inputBoxes);
+// console.log(inputBoxes);
 
 // Focus the form to the first text input
 $('#name').focus();
@@ -71,8 +71,8 @@ $('.activities').change(function(e){
 
     let clicked = e.target;
     let clickedType = clicked.getAttribute('data-day-and-time');
-    console.log(clicked);
-    console.log(clickedType);
+    // console.log(clicked);
+    // console.log(clickedType);
     for(let i = 0; i < inputBoxes.length; i++){
         let checkboxType = inputBoxes[i].getAttribute('data-day-and-time');
         console.log(checkboxType); 
@@ -114,30 +114,67 @@ $('#payment').change(function(e){
 })
 
 // Form Validation
-    
-// Name Validation 
-// const nameValidate = $('#name').keyup(function(e){
-//     let nameValue = $(this).val();
-//     if(nameValue === ""){
-//         alert('Please enter name!');
-//     }
-// })
-function nameValidate (){
-    if($('#name').val() == ""){
-        alert("please eneter name!")
-        $('#name').focus();
-        return false;
-    }else {
-        return true;
-    }
-}
+let nameField = $('#name').val();
 
-// Email Validation
+    $('button').click(function(event){
+        // console.log("Button was clicked");
 
-// Activity Section Validation
-
-// Credit Card Validation (only if credit card is selected)
-
-// zip code validation (only if credit card is selected)
-
-// cvv only if CC is selected
+            function nameValidate (){
+                if(nameField == ""){
+                    alert("please eneter name!");
+                   nameField.focus();
+                    return false;
+                }
+            }
+            // // Email Validation
+            // function emailValidate (){
+            //     var email = $('#mail');
+            //     var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        
+            //     if (!filter.test(email.value)) {
+            //     alert('Please provide a valid email address');
+            //     email.focus;
+            //     return false;
+            //     }
+            // }
+        
+            // // Activity Section Validation
+            // function activityChecked (){
+            //     if(inputBoxes.checked){
+            //         alert('please select and activity');
+            //         inputBoxes.focus;
+            //         return false;
+            //     }
+            // }
+            // // Credit Card Validation (only if credit card is selected)
+            // function creditValidate (){
+            //     if($('#payment').val() === 'Credit Card'){
+            //         let cardNumberfield = $('cc-num').val();
+            //         let matchCardNumber = /^(?:3[47][0-9]{13})$/;
+            //         let cardZip = $('#zip').val();
+            //         let zipValid = /^[0-9]{5}(?:-[0-9]{4})?$/;
+            //         let cvv = $('#cvv').val();
+            //         let cvvValid = /^[0-9]{3,4}$/
+        
+            //         if(cardNumberfield !== matchCardNumber){
+            //             alert('Please enter a valid credit card number!');
+            //             $('cc-num').focus;
+            //             return false;
+            //         }
+            //         // zip code validation (only if credit card is selected)
+            //         if(cardZip !== zipValid){
+            //             alert('Please enter Valid Zip-Code!')
+            //             $('#zip').focus;
+            //             return false;
+            //         }
+            //         // cvv only if CC is selected
+            //         if(cvv !== cvvValid){
+            //             alert('Please enter Valid cvv!')
+            //             ('#cvv').focus;
+            //             return false;
+            //         }
+            //     }
+            // }
+            event.preventDefault();
+    });
+   
