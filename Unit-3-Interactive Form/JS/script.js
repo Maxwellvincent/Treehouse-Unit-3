@@ -63,33 +63,81 @@ $('.activities').change(function(e){
         $totalActivityCost -= $activityCost;
     }
     
-    // console.log($totalActivityCost);
-    let $activityDate = $checkedBox.attr('data-day-and-time');
-    console.log($activityDate);
+    // // console.log($totalActivityCost);
+    // let $activityDate = $checkedBox.attr('data-day-and-time');
+    // console.log($activityDate);
 
     // Now i need to compare the activity that was clicked (checkedbox) with all other activites, to disable conflicting times. 
 
-    $.each(inputBoxes, function(i){
-        let checkboxData = inputBoxes[i].getAttribute('data-day-and-time');
-        console.dir(checkboxData);
-        if($activityDate === checkboxData && $checkedBox[i] !== inputBoxes[0]) {
-            
-            if($checkedBox.prop('checked')){
-                
-            // then disable all other matching data-and times prop('disabled',true)
-                inputBoxes[i].setAttribute('disabled',true);
-            } else if($checkedBox.prop('checked') === false){
-            // then enable all other matching data prop('enabled',true)
-                inputBoxes[i].setAttribute('enabled',true);
+    let clicked = e.target;
+    let clickedType = clicked.getAttribute('data-day-and-time');
+    console.log(clicked);
+    console.log(clickedType);
+    for(let i = 0; i < inputBoxes.length; i++){
+        let checkboxType = inputBoxes[i].getAttribute('data-day-and-time');
+        console.log(checkboxType); 
+        if(clickedType === checkboxType && clicked !== inputBoxes[i]){
+            if(clicked.checked){
+                inputBoxes[i].disabled = true;
+            }else {
+                inputBoxes[i].disabled = false;
             }
-
-        }
-
-    })
-
+        }   
+    }
 
     return $totalActivityElement.val($totalActivityCost);
-
-
 });
 
+// Payment Section 
+// Need to hide the select payment option 
+$('#payment option[value="select method"]').hide();
+
+// Created a function that runs every time the select option is changed, and hide the different elements. 
+$('#payment').change(function(e){
+    let selectedPayment = $(this).val();
+    console.log(selectedPayment);
+    if(selectedPayment === 'Credit Card'){
+        $('#paypal').hide();
+        $('#bitcoin').hide();
+        $('#credit-card').show();
+    } else if (selectedPayment === 'PayPal'){
+        $('#paypal').show();
+        $('#credit-card').hide();
+        $('#bitcoin').hide();
+        
+    }else{
+        $('#paypal').hide();
+        $('#credit-card').hide();
+        $('#bitcoin').show();
+    }
+
+})
+
+// Form Validation
+    
+// Name Validation 
+// const nameValidate = $('#name').keyup(function(e){
+//     let nameValue = $(this).val();
+//     if(nameValue === ""){
+//         alert('Please enter name!');
+//     }
+// })
+function nameValidate (){
+    if($('#name').val() == ""){
+        alert("please eneter name!")
+        $('#name').focus();
+        return false;
+    }else {
+        return true;
+    }
+}
+
+// Email Validation
+
+// Activity Section Validation
+
+// Credit Card Validation (only if credit card is selected)
+
+// zip code validation (only if credit card is selected)
+
+// cvv only if CC is selected
