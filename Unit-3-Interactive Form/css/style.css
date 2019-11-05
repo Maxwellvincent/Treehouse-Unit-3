@@ -197,3 +197,13 @@ option {
 		clear: both;
 	}
 }
+
+/*======================================
+Error Message Custom 
+=======================================*/
+
+ #error-message {
+	color: whitesmoke;
+	float: right;
+	background-color: red;
+}
