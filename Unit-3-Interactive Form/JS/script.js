@@ -101,7 +101,7 @@ $('.activities').change(function(e){
     // console.log(clickedType);
     for(let i = 0; i < inputBoxes.length; i++){
         let checkboxType = inputBoxes[i].getAttribute('data-day-and-time');
-        console.log(checkboxType); 
+        // console.log(checkboxType); 
         if(clickedType === checkboxType && clicked !== inputBoxes[i]){
             if(clicked.checked){
                 inputBoxes[i].disabled = true;
@@ -121,7 +121,7 @@ $('#payment option[value="select method"]').hide();
 // Created a function that runs every time the select option is changed, and hide the different elements. 
 $('#payment').change(function(e){
     let selectedPayment = $(this).val();
-    console.log(selectedPayment);
+    // console.log(selectedPayment);
     if(selectedPayment === 'Credit Card'){
         $('#paypal').hide();
         $('#bitcoin').hide();
@@ -140,106 +140,103 @@ $('#payment').change(function(e){
 })
 
 // Form Validation
-function formValid() {
-    $('form').on('submit', function(){
-        if(check == false) {
-            nameValidate();
-            emailValidate();
-            activityChecked();
-            creditValidate();
+
+$('form').on("input submit click", function(e){
+    if(formValidation()){
+        $('form').addClass('form-submitted');
+    }else {
+        event.preventDefault();
+        $('form').removeAttr('class')
+    }
+    
+});
+
+function formValidation(){
+
+    $('#name').on('input', function() {
+        // this will give me that particular element, $(this) will give me that element wrapped as a Jquery object
+        let username = $(this).val();
+        if(username < 1 || ""){
+            $('#name-error').show()
+            $('#name').focus();
+            return false;
+        }else {
+            $('#name-error').hide();
         }
     });
-}
 
-    $('button').on("click", function(event){
-        // console.log("Button was clicked");
-        let nameField = $('#name').val();
-        let lookforBoxes = $('.activities input');
-        // console.log(nameField); Only works within the function, function is not aware of the variable outside. 
-            function nameValidate (){
-                if(nameField === ""){
-                    $('#name').after('<span id="error-message"> Please Enter A Name </span>');
-                   $('#name').focus();
-                   return false;
-                } else {
-                    $('#error-message').hide();
-                }
-                
+    $('#mail').on("input",function() {
+        let email = $(this).val();
+        let emailEx = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        if(email < 1 || ""){
+            $('#email-error').show();
+            $("email").focus();
+            return false;
+        }else {
+            $('#email-error').hide();
+            if(!emailEx.test(email)){
+                $('#email-error').show();
             }
-           
-
-            // // Email Validation
-            function emailValidate (){
-                var email = $('#mail').val();
-                var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        
-                if (!filter.test(email)) {
-                    $('#mail').after('<span id="error-message"> Please provide a valid email address </span>');
-                    email.focus;
-                    return false;
-                } else {
-                    $('#error-message').hide();
-                }
-            }
-            emailValidate();
-        
-            // // Activity Section Validation
-            function activityChecked (){
-                // a counter 
-                let boxesChecked = 0;
-                // need to go through and check all boxes and see if they are checked, not just one
-                for(let i = 0; i < lookforBoxes.length; i++){
-                    
-                    if(lookforBoxes[i].checked){
-                        boxesChecked++;
-                    }
-                }
-
-                if(boxesChecked === 0){
-                    $('.activities legend').after('<span id="error-message"> Please Select an Activity </span>');
-                   return false;
-                } else {
-                    $('#error-message').hide();
-                }
-            }
-            activityChecked();
-
-            // Credit Card Validation (only if credit card is selected)
-            function creditValidate (){
-                if($('#payment').val() === 'Credit Card'){
-                    let cardNumberfield = $('#cc-num').val();
-                    // console.log(cardNumberfield);
-                    let matchCardNumber = /^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/;
-                    let cardZip = $('#zip').val();
-                    // console.log(cardZip);
-                    let zipValid = /^[0-9]{5}(?:-[0-9]{4})?$/;
-                    let cvv = $('#cvv').val();
-                    let cvvValid = /^[0-9]{3,4}$/
-        
-                    if(matchCardNumber.test(cardNumberfield) === 'false' || cardNumberfield == ""){
-                        $('#cc-num').after('<span id="error-message"> Please enter a valid credit card number! </span>');
-                        $('#cc-num').focus;
-                        return false;
-
-                        // zip code validation (only if credit card is selected)
-                    }else if(zipValid.test(cardZip) === 'false' || cardZip === ""){
-                        $('#zip').after('<span id="error-message"> Please enter Valid Zip-Code! </span>');
-                        $('#zip').focus;
-                        return false;
-
-                        // cvv only if CC is selected
-                    }else if(cvvValid.test(cvv) === 'false' || cvv == "" ){
-                        $('#cvv').after('<span id="error-message"> Please enter Valid cvv! </span>');
-                        $('#cvv').focus;
-                        return false;
-                    } else {
-                        alert("Form Submitted Successfully");
-                        return true;
-                    }
-                }
-            }
-            creditValidate();
-
-            event.preventDefault(false);
+        }
     });
+
+    // On validation we want to make sure an activity is selected
+    $('.activities input').on("change", function(){
+        let activityBoxes = $('.activities input');
+        // a counter 
+        let boxesChecked = 0;
+        // need to go through and check all boxes and see if they are checked, not just one
+        for(let i = 0; i < activityBoxes.length; i++){
+
+             if(activityBoxes[i].checked){
+                        boxesChecked++;
+                }
+        }
+            if(boxesChecked === 0){
+                 $('#activity-error').show();
+                 return false;
+                
+            } else {
+                 $('#activity-error').hide();
+            }
+    })
+        
+
+     // credit Card Validation
+     $('#payment').on("change", function(){
+        if($('#payment').val() === 'Credit Card'){
+
+            let cardNumberfield = $('#cc-num').val();
+            // console.log(cardNumberfield);
+            let matchCardNumber = /^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/;
+            let cardZip = $('#zip').val();
+            // console.log(cardZip);
+            let zipValid = /^[0-9]{5}(?:-[0-9]{4})?$/;
+            let cvv = $('#cvv').val();
+            let cvvValid = /^[0-9]{3,4}$/
+    
+            if(matchCardNumber.test(cardNumberfield) === 'false' || cardNumberfield === ""){
+                $('#ccnum-error').show();
+                $('#cc-num').focus;
+               
+            }else{
+                $('#ccnum-error').hide();
+            }
+                // zip code validation (only if credit card is selected)
+            if(zipValid.test(cardZip) === 'false' || cardZip === ""){
+                $('#zip-error').show();
+                $('#zip').focus;
+            }else {
+                $('#zip-error').hide();
+            }
+                // cvv only if CC is selected
+            if(cvvValid.test(cvv) === 'false' || cvv === "" ){
+                $('#cvv-error').show()
+                $('#cvv').focus;
+            } else {
+                $('#cvv-error').hide();
+            }
+        }
+     })
+}
    
