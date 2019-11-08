@@ -22,9 +22,10 @@
         
         <label for="name">Name:</label>
         <input type="text" id="name" name="user-name">
-        
+        <span id="name-error">Please Enter a Valid Name</span>
         <label for="mail">Email:</label>
         <input type="email" id="mail" name="user-email">
+        <span id="email-error">Please Enter a Valid E-Mail</span>
         
         <label for="title">Job Role</label>
         <select id="title" name="user-title">
@@ -77,6 +78,7 @@
 
       <fieldset class="activities">
         <legend>Register for Activities</legend>
+        <span id="activity-error">Please Select an Activity</span>
         <label>
           <input type="checkbox" name="all" data-cost="$200"> Main Conference — $200
         </label>
@@ -121,17 +123,20 @@
 
           <div class="col-6 col">
             <label for="cc-num">Card Number:</label>
-        	  <input id="cc-num" name="user-cc-num" type="text">
+            <input id="cc-num" name="user-cc-num" type="text">
+            <span id="ccnum-error">Enter a Valid Credit Card</span>
           </div>
 
           <div class="col-3 col">
             <label for="zip">Zip Code:</label>
             <input id="zip" name="user-zip" type="text"> 
+            <span id="zip-error">Enter a Valid Zip-Code</span>
           </div>
 
           <div class="col-3 col">
             <label for="cvv">CVV:</label>
             <input id="cvv" name="user-cvv" type="text"> 
+            <span id="cvv-error">Enter a Valid CVV</span>
           </div>
 
           <label for="exp-month">Expiration Date:</label>
