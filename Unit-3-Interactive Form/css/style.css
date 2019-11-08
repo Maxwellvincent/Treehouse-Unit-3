@@ -202,8 +202,10 @@ option {
 Error Message Custom 
 =======================================*/
 
- #error-message {
+ #name-error, #email-error, #activity-error, #ccnum-error, #zip-error, #cvv-error {
 	color: whitesmoke;
 	float: right;
 	background-color: red;
+	padding: 12px;
+	display:none;
 }
