@@ -4,7 +4,14 @@ const inputBoxes = $('.activities input');
 // Focus the form to the first text input
 $('#name').focus();
 
+// credit card is the first selected method
+$('#payment option[value="Credit Card"]').prop('selected',true);
+
 // create a text field that shows when "other" option is selected from the Job role drop down menu
+// Future reference element needs to be created before function, element is created within HTML which allows it to be interacted with 
+// using Jquery in script;
+
+
 $('#otherJob').hide();
 $('#title').change(function(e){
     let jobSelect = e.target.value;
@@ -19,7 +26,8 @@ $('#title').change(function(e){
 
 // T- Shirt Selection Hide the Select option theme 
 $('#design').find("option").eq(0).hide();
-$('#design').find("option").eq(0).attr({"hidden":"true","disabled":"true"});
+// These do the same exact thing
+// $('#design').find("option").eq(0).attr({"hidden":"true","disabled":"true"});
 
 // Creates a new Option element to have this shown first, with selected attribute list
 $('#color').prepend("<option selected>Please Select a T-Shirt Theme</option>");
@@ -28,13 +36,21 @@ $('#color').prepend("<option selected>Please Select a T-Shirt Theme</option>");
 $('#color option[value !=all]').attr("hidden","true");
 
 // Grab the design select element add an event listener 
-$('#design').change(function(e){
-    // console.log($(event.target).val());
-    if($(event.target).val() === "js puns"){
-            $('#color option[value=cornflowerblue]').attr("selected","selected").show();
-            $('#color option[value=darkslategrey]').show();
-            $('#color option[value=gold]').show();
-    }else if($(event.target).val() === "heart js"){
+$('#design').on("change", function(e){
+    if(this.value === "js puns"){
+        $('#color option[value=cornflowerblue]').attr("selected","selected").show();
+        $('#color option[value=darkslategrey]').show();
+        $('#color option[value=gold]').show();
+
+        $('#color option[value=tomato]').removeAttr("selected","selected").hide();
+        $('#color option[value=steelblue]').hide();
+        $('#color option[value=dimgrey]').hide();
+
+    }else if(this.value === "heart js"){
+        $('#color option[value=cornflowerblue]').removeAttr("selected","false").hide();
+        $('#color option[value=darkslategrey]').hide();
+        $('#color option[value=gold]').hide();
+
         $('#color option[value=tomato]').attr("selected","selected").show();
         $('#color option[value=steelblue]').show();
         $('#color option[value=dimgrey]').show();
@@ -124,8 +140,18 @@ $('#payment').change(function(e){
 })
 
 // Form Validation
+function formValid() {
+    $('form').on('submit', function(){
+        if(check == false) {
+            nameValidate();
+            emailValidate();
+            activityChecked();
+            creditValidate();
+        }
+    });
+}
 
-    $('button').click(function(event){
+    $('button').on("click", function(event){
         // console.log("Button was clicked");
         let nameField = $('#name').val();
         let lookforBoxes = $('.activities input');
@@ -140,7 +166,7 @@ $('#payment').change(function(e){
                 }
                 
             }
-            nameValidate();
+           
 
             // // Email Validation
             function emailValidate (){
@@ -178,7 +204,7 @@ $('#payment').change(function(e){
             }
             activityChecked();
 
-            // // Credit Card Validation (only if credit card is selected)
+            // Credit Card Validation (only if credit card is selected)
             function creditValidate (){
                 if($('#payment').val() === 'Credit Card'){
                     let cardNumberfield = $('#cc-num').val();
@@ -196,22 +222,24 @@ $('#payment').change(function(e){
                         return false;
 
                         // zip code validation (only if credit card is selected)
-                    } else if(zipValid.test(cardZip) === 'false' || cardZip === ""){
+                    }else if(zipValid.test(cardZip) === 'false' || cardZip === ""){
                         $('#zip').after('<span id="error-message"> Please enter Valid Zip-Code! </span>');
                         $('#zip').focus;
                         return false;
 
                         // cvv only if CC is selected
-                    } else if(cvvValid.test(cvv) === 'false' || cvv == "" ){
+                    }else if(cvvValid.test(cvv) === 'false' || cvv == "" ){
                         $('#cvv').after('<span id="error-message"> Please enter Valid cvv! </span>');
                         $('#cvv').focus;
                         return false;
+                    } else {
+                        alert("Form Submitted Successfully");
+                        return true;
                     }
-                    
                 }
             }
             creditValidate();
 
-            event.preventDefault();
+            event.preventDefault(false);
     });
    
