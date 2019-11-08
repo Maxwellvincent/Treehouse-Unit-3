@@ -198,13 +198,14 @@ $('form').on("submit input change", function(e){
         let cardNumberfield = $('#cc-num').val();
         // console.log(cardNumberfield);
         let matchCardNumber = /^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/;
+        
         let cardZip = $('#zip').val();
         // console.log(cardZip);
         let zipValid = /^[0-9]{5}(?:-[0-9]{4})?$/;
         let cvv = $('#cvv').val();
         let cvvValid = /^[0-9]{3,4}$/
 
-        if(matchCardNumber.test(cardNumberfield) === 'false' || cardNumberfield === ""){
+        if(!matchCardNumber.test(cardNumberfield) || cardNumberfield === ""){
             $('#ccnum-error').show();
             $('#cc-num').focus;
             e.preventDefault();
@@ -213,7 +214,7 @@ $('form').on("submit input change", function(e){
             $('#ccnum-error').hide();
         }
             // zip code validation (only if credit card is selected)
-        if(zipValid.test(cardZip) === 'false' || cardZip === ""){
+        if(!zipValid.test(cardZip) || cardZip === ""){
             $('#zip-error').show();
             $('#zip').focus;
             e.preventDefault();
@@ -221,7 +222,7 @@ $('form').on("submit input change", function(e){
             $('#zip-error').hide();
         }
             // cvv only if CC is selected
-        if(cvvValid.test(cvv) === 'false' || cvv === "" ){
+        if(!cvvValid.test(cvv) || cvv === "" ){
             $('#cvv-error').show()
             $('#cvv').focus;
             e.preventDefault();
