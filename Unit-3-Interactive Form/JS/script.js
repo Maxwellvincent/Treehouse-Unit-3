@@ -5,7 +5,17 @@ const inputBoxes = $('.activities input');
 $('#name').focus();
 
 // create a text field that shows when "other" option is selected from the Job role drop down menu
-$('#other-title').show();
+$('#otherJob').hide();
+$('#title').change(function(e){
+    let jobSelect = e.target.value;
+    if(jobSelect === "other"){
+        $('#otherJob').show();
+    } else {
+        $('#otherJob').hide();
+    }
+})
+
+
 
 // T- Shirt Selection Hide the Select option theme 
 $('#design').find("option").eq(0).hide();
