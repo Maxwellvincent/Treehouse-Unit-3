@@ -7,6 +7,9 @@ $('#name').focus();
 // credit card is the first selected method
 $('#payment option[value="Credit Card"]').prop('selected',true);
 
+
+
+
 // create a text field that shows when "other" option is selected from the Job role drop down menu
 // Future reference element needs to be created before function, element is created within HTML which allows it to be interacted with 
 // using Jquery in script;
@@ -178,18 +181,20 @@ $('form').on("submit input change", function(e){
     }
     
     // Activity Validation
+    
     let counter = 0;
     for(let i =0; i < activity.length; i++){
         
         if(activity[i].checked){
             counter++;
         }
-        if(counter === 0){
-            $('#activity-error').show();
-            e.preventDefault();
-        }else{
-            $("#activity-error").hide();
-        }
+    }
+    if(counter === 0){
+        $('#activity-error').show();
+        e.preventDefault();
+    }else{
+        $("#activity-error").hide();
+        
     }
     
     // Credit Card Validation
@@ -197,7 +202,7 @@ $('form').on("submit input change", function(e){
 
         let cardNumberfield = $('#cc-num').val();
         // console.log(cardNumberfield);
-        let matchCardNumber = /^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/;
+        let matchCardNumber = /^[0-9]{10,13}$/;
         
         let cardZip = $('#zip').val();
         // console.log(cardZip);
