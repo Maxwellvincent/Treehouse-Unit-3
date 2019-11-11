@@ -6,8 +6,8 @@ $('#name').focus();
 
 // credit card is the first selected method
 $('#payment option[value="Credit Card"]').prop('selected',true);
-
-
+$('#paypal').hide();
+$('#bitcoin').hide();
 
 
 // create a text field that shows when "other" option is selected from the Job role drop down menu
@@ -121,9 +121,11 @@ $('.activities').change(function(e){
 // Need to hide the select payment option 
 $('#payment option[value="select method"]').hide();
 
+
 // Created a function that runs every time the select option is changed, and hide the different elements. 
 $('#payment').change(function(e){
     let selectedPayment = $(this).val();
+    console.log(this);
     // console.log(selectedPayment);
     if(selectedPayment === 'Credit Card'){
         $('#paypal').hide();
@@ -141,6 +143,7 @@ $('#payment').change(function(e){
     }
 
 })
+
 
 // Form Validation
 let username = $('#name');
@@ -202,7 +205,7 @@ $('form').on("submit input change", function(e){
 
         let cardNumberfield = $('#cc-num').val();
         // console.log(cardNumberfield);
-        let matchCardNumber = /^[0-9]{10,13}$/;
+        let matchCardNumber = /^[0-9]{13,16}$/;
         
         let cardZip = $('#zip').val();
         // console.log(cardZip);
